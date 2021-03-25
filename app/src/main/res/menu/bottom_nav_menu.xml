@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_journal"
+        android:icon="@drawable/ic_outline_sticky_note_2_24"
+        android:title="@string/title_journal" />
+
+    <item
+        android:id="@+id/navigation_weather"
+        android:icon="@drawable/ic_outline_weather_custom_24"
+        android:title="@string/title_weather" />
+
+    <item
+        android:id="@+id/navigation_word"
+        android:icon="@drawable/ic_outline_font_download_24"
+        android:title="@string/title_word" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_outline_settings_applications_24"
+        android:title="@string/title_settings" />
+</menu>
