@@ -12,7 +12,7 @@
     <!-- spacerace Brand Colors -->
     <color name="spacerace_purple">#84149C</color>
     <color name="spacerace_purple_dark">#53006D</color>
-    <color name="spacerace_purple_light">#B74DCE</color>
+    <color name="spacerace_purple_light">#BB86FC</color>
     <color name="martian_orange">#FFB051</color>
     <color name="martian_orange_dark">#C88120</color>
 </resources>
