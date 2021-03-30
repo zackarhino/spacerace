@@ -1,5 +1,4 @@
 # spacerace
-### **spacerace** is a creative writing app that is built specifically to give space nerds a brain blast.
 ![image](https://user-images.githubusercontent.com/22804020/110551422-756e9b00-8103-11eb-937b-649e5773d3ff.png)
 
 This Android app contains a handful of nifty tools that you can use to keep track of your thoughts and findings, or even to get inspiration from, for the more creative types out there.
