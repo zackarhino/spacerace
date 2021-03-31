@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 navView.getMenu().getItem(0).setChecked(false);
                 navView.getMenu().getItem(position).setChecked(true);
-                navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId()); }
+                navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId());
+                navController.navigate(navView.getMenu().getItem(position).getItemId());
+            }
             public void onPageScrollStateChanged(int state) { }
         });
         // Set adapter, etc.
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // ViewPager adapter
     private static class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
+        public final List<Fragment> mFragmentList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) { super(manager); }
         @NotNull public Fragment getItem(int position) { return mFragmentList.get(position); }
