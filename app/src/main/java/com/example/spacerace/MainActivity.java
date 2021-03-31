@@ -1,6 +1,7 @@
 package com.example.spacerace;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.spacerace.fragments.JournalFragment;
@@ -22,6 +23,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +56,17 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.fragmentPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-            public void onPageSelected(int position) { navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId()); }
+            public void onPageSelected(int position) {
+                navView.getMenu().getItem(0).setChecked(false);
+                navView.getMenu().getItem(position).setChecked(true);
+                Log.d("page",""+position);
+                navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId()); }
             public void onPageScrollStateChanged(int state) { }
         });
+        // Set adapter, etc.
         setupViewPager(viewPager);
 
+        NavigationUI.setupWithNavController(navView, navController);
         // Syncs the ViewPager with the bottom nav
         navView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -77,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 });
-        NavigationUI.setupWithNavController(navView, navController);
     }
     // NOTE: The viewpager code was modified from https://github.com/coderminion/Android-Bottom-navigation-with-Viewpager-Fragments
     /**
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) { super(manager); }
-        public Fragment getItem(int position) { return mFragmentList.get(position); }
+        @NotNull public Fragment getItem(int position) { return mFragmentList.get(position); }
         public int getCount() { return 4; }
         public void addFragment(Fragment fragment) { mFragmentList.add(fragment); }
     }
