@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 navView.getMenu().getItem(0).setChecked(false);
                 navView.getMenu().getItem(position).setChecked(true);
-                Log.d("page",""+position);
                 navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId()); }
             public void onPageScrollStateChanged(int state) { }
         });
