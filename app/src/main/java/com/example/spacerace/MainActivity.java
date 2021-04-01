@@ -1,13 +1,18 @@
 package com.example.spacerace;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.spacerace.database.Note;
+import com.example.spacerace.database.NoteDB;
 import com.example.spacerace.fragments.JournalFragment;
 import com.example.spacerace.fragments.SettingsFragment;
 import com.example.spacerace.fragments.WeatherFragment;
 import com.example.spacerace.fragments.WordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +28,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -31,6 +39,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     public static ViewPager viewPager;
+    public static ExtendedFloatingActionButton newNoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +50,42 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        newNoteButton = findViewById(R.id.fab);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_journal, R.id.navigation_weather, R.id.navigation_word, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        // Add a note when fab is clicked
+        newNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NoteDB db = new NoteDB(getApplicationContext());
+                db.addNote(new Note("Test Note", "Hello, World!", Calendar.getInstance().getTime().toString()));
+                db.closeDB();
+            }
+        });
+        newNoteButton.show();
+
         // Viewpager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-            public void onPageSelected(int position) { navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId()); }
+            public void onPageSelected(int position) {
+                navView.getMenu().getItem(0).setChecked(false);
+                navView.getMenu().getItem(position).setChecked(true);
+                navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId());
+                navController.navigate(navView.getMenu().getItem(position).getItemId());
+            }
             public void onPageScrollStateChanged(int state) { }
         });
+        // Set adapter, etc.
         setupViewPager(viewPager);
 
+        NavigationUI.setupWithNavController(navView, navController);
         // Syncs the ViewPager with the bottom nav
         navView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -77,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 });
-        NavigationUI.setupWithNavController(navView, navController);
     }
     // NOTE: The viewpager code was modified from https://github.com/coderminion/Android-Bottom-navigation-with-Viewpager-Fragments
     /**
@@ -99,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
     }
     // ViewPager adapter
     private static class ViewPagerAdapter extends FragmentStatePagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
+        public final List<Fragment> mFragmentList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) { super(manager); }
-        public Fragment getItem(int position) { return mFragmentList.get(position); }
-        public int getCount() { return 4; }
+        @NotNull public Fragment getItem(int position) { return mFragmentList.get(position); }
+        public int getCount() { return mFragmentList.size(); }
         public void addFragment(Fragment fragment) { mFragmentList.add(fragment); }
     }
 }
