@@ -3,7 +3,10 @@ package com.example.spacerace;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.spacerace.database.Note;
+import com.example.spacerace.database.NoteDB;
 import com.example.spacerace.fragments.JournalFragment;
 import com.example.spacerace.fragments.SettingsFragment;
 import com.example.spacerace.fragments.WeatherFragment;
@@ -28,6 +31,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -54,7 +58,18 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        
+
+        // Add a note when fab is clicked
+        newNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NoteDB db = new NoteDB(getApplicationContext());
+                db.addNote(new Note("Test Note", "Hello, World!", Calendar.getInstance().getTime().toString()));
+                db.closeDB();
+            }
+        });
+        newNoteButton.show();
+
         // Viewpager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
