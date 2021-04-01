@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_journal, R.id.navigation_weather, R.id.navigation_word, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         
         // Viewpager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         public ViewPagerAdapter(FragmentManager manager) { super(manager); }
         @NotNull public Fragment getItem(int position) { return mFragmentList.get(position); }
-        public int getCount() { return 4; }
+        public int getCount() { return mFragmentList.size(); }
         public void addFragment(Fragment fragment) { mFragmentList.add(fragment); }
     }
 }
