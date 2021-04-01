@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.spacerace.MainActivity;
 import com.example.spacerace.R;
 
 public class JournalFragment extends Fragment {
@@ -19,7 +20,7 @@ public class JournalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal, container, false);
-
+        MainActivity.newNoteButton.show();
         return view;
     }
 }

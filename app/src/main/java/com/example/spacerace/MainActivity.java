@@ -9,6 +9,7 @@ import com.example.spacerace.fragments.SettingsFragment;
 import com.example.spacerace.fragments.WeatherFragment;
 import com.example.spacerace.fragments.WordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     public static ViewPager viewPager;
+    public static ExtendedFloatingActionButton newNoteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        newNoteButton = findViewById(R.id.fab);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
