@@ -54,6 +54,7 @@ public class JournalFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
         return view;
     }
 
