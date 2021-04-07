@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
             public void onPageSelected(int position) {
                 navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId());
-                navController.navigate(navView.getMenu().getItem(position).getItemId()); }
+                navController.navigate(navView.getMenu().getItem(position).getItemId());
+            }
             public void onPageScrollStateChanged(int state) { }
         });
         // Set adapter, etc.
@@ -100,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        newNoteButton.show();
-
         adapter.addFragment(new JournalFragment());
         adapter.addFragment(new WeatherFragment());
         adapter.addFragment(new WordFragment());
