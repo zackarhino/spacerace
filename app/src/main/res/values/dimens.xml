@@ -5,7 +5,9 @@
 
     <!-- Padding/Margin -->
     <dimen name="small_padding">8dp</dimen>
-    <dimen name="large_padding">16dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
+    <dimen name="large_padding">24dp</dimen>
+    <dimen name="recyclerview_bottom_padding">64dp</dimen>
     <!-- Font sizes -->
     <dimen name="title_text_size">24sp</dimen>
     <dimen name="body_text_size">16sp</dimen>

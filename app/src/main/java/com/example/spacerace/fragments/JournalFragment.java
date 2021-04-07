@@ -37,7 +37,6 @@ public class JournalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal, container, false);
-
         // Add a note when fab is clicked
         MainActivity.newNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +49,6 @@ public class JournalFragment extends Fragment {
                 db.closeDB();
             }
         });
-        MainActivity.newNoteButton.show();
 
         adapter = new NoteAdapter(getContext());
         RecyclerView recyclerView = view.findViewById(R.id.notes);
@@ -65,7 +63,7 @@ public class JournalFragment extends Fragment {
 
         public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_view, parent, false);
-
+            MainActivity.newNoteButton.show();
             return new NoteViewHolder(view);
         }
 
