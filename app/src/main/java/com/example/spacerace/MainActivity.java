@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         newNoteButton = findViewById(R.id.fab);
+        newNoteButton.show();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -59,27 +60,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        // Add a note when fab is clicked
-        newNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NoteDB db = new NoteDB(getApplicationContext());
-                db.addNote(new Note("Test Note", "Hello, World!", Calendar.getInstance().getTime().toString()));
-                db.closeDB();
-            }
-        });
-        newNoteButton.show();
-
         // Viewpager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
             public void onPageSelected(int position) {
-                navView.getMenu().getItem(0).setChecked(false);
-                navView.getMenu().getItem(position).setChecked(true);
                 navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId());
-                navController.navigate(navView.getMenu().getItem(position).getItemId());
-            }
+                navController.navigate(navView.getMenu().getItem(position).getItemId()); }
             public void onPageScrollStateChanged(int state) { }
         });
         // Set adapter, etc.
@@ -113,15 +100,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        JournalFragment journalFragment = new JournalFragment();
-        WeatherFragment weatherFragment = new WeatherFragment();
-        WordFragment wordFragment = new WordFragment();
-        SettingsFragment settingsFragment = new SettingsFragment();
 
-        adapter.addFragment(journalFragment);
-        adapter.addFragment(weatherFragment);
-        adapter.addFragment(wordFragment);
-        adapter.addFragment(settingsFragment);
+        newNoteButton.show();
+
+        adapter.addFragment(new JournalFragment());
+        adapter.addFragment(new WeatherFragment());
+        adapter.addFragment(new WordFragment());
+        adapter.addFragment(new SettingsFragment());
         viewPager.setAdapter(adapter);
     }
     // ViewPager adapter
