@@ -14,10 +14,10 @@
         android:layout_height="@dimen/imageview_height"
         android:contentDescription="@string/cd_apod"
         android:scaleType="centerCrop"
+        android:src="@drawable/spacerace_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/spacerace_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.core.widget.NestedScrollView

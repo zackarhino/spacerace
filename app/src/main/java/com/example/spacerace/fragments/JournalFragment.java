@@ -2,9 +2,11 @@ package com.example.spacerace.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,10 +15,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.spacerace.MainActivity;
 import com.example.spacerace.R;
 import com.example.spacerace.database.Note;
 import com.example.spacerace.database.NoteDB;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +36,10 @@ public class JournalFragment extends Fragment {
 
     private static ArrayList<Note> notes;
     private static NoteAdapter adapter;
+
+    private static RequestQueue requestQueue;
+
+    public ImageView apod_imageview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,12 +65,48 @@ public class JournalFragment extends Fragment {
             }
         });
 
+        requestQueue = getRequestQueue(getContext());
+        apod_imageview = view.findViewById(R.id.imageView);
+        updateNasaImage("i68uCMxS1T7fZjiMEbW3E0qEc0tMBxQaCxYZ08ZL");
+
         adapter = new NoteAdapter(getContext());
         RecyclerView recyclerView = view.findViewById(R.id.notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
         return view;
+    }
+
+    /**
+     *
+     * @param apiKey The API key to query the APOD API with
+     */
+    private void updateNasaImage(String apiKey){
+        String url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    public void onResponse(JSONObject response) {
+                        String imageURL = "";
+                        try {
+                            imageURL = response.getString("hdurl");
+                            Picasso.get().load(imageURL).into(apod_imageview);
+                            //Log.d("Volley", imageURL);
+                        }catch (Exception e){
+                            Log.e("Volley", "Error parsing url.");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public static RequestQueue getRequestQueue(Context context){
+        if(requestQueue == null){
+            requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        }
+        return requestQueue;
     }
 
     public static class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder>{
