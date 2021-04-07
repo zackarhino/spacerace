@@ -91,7 +91,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * @return ArrayList of all Notes
      */
     public ArrayList<Note> getAllDishes() {
-        ArrayList<Note> notes = new ArrayList<Note>();
+        ArrayList<Note> notes = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NOTES;
 
         SQLiteDatabase db = this.getWritableDatabase();

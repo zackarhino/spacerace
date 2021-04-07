@@ -57,18 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_journal, R.id.navigation_weather, R.id.navigation_word, R.id.navigation_settings)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        // Add a note when fab is clicked
-        newNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NoteDB db = new NoteDB(getApplicationContext());
-                db.addNote(new Note("Test Note", "Hello, World!", Calendar.getInstance().getTime().toString()));
-                db.closeDB();
-            }
-        });
         newNoteButton.show();
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         // Viewpager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
@@ -78,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 navView.getMenu().getItem(0).setChecked(false);
                 navView.getMenu().getItem(position).setChecked(true);
                 navView.setSelectedItemId(navView.getMenu().getItem(position).getItemId());
-                navController.navigate(navView.getMenu().getItem(position).getItemId());
-            }
+                navController.navigate(navView.getMenu().getItem(position).getItemId()); }
             public void onPageScrollStateChanged(int state) { }
         });
         // Set adapter, etc.
