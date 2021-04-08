@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/spacerace_purple_light"
     tools:context=".fragments.JournalFragment">
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -20,6 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/spacerace_purple"
+        android:gravity="center"
+        android:text="@string/fab_new_note"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scrollview"

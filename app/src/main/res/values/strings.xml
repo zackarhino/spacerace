@@ -17,4 +17,6 @@
     <!-- Note Placeholder -->
     <string name="note_title">Title</string>
     <string name="note_body">Body</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

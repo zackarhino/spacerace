@@ -74,7 +74,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * Retrieve single Note from database
      * @param id ID of Note in database
      */
-    public Note getDish(int id) {
+    public Note getNote(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NOTES,
                 new String[] { COLUMN_NOTE_ID, COLUMN_NOTE_TITLE, COLUMN_NOTE_BODY, COLUMN_NOTE_DATE}, COLUMN_NOTE_ID+ "=?",
@@ -90,7 +90,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * Retrieve all Notes from database
      * @return ArrayList of all Notes
      */
-    public ArrayList<Note> getAllDishes() {
+    public ArrayList<Note> getAllNotees() {
         ArrayList<Note> notes = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NOTES;
 
@@ -114,7 +114,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * @param note The Note to modify
      * @return The status of the update
      */
-    public int updateDish(Note note) {
+    public int updateNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOTE_TITLE, note.getTitle());
@@ -125,12 +125,12 @@ public class NoteDB extends SQLiteOpenHelper {
 
     /**
      * Delete a Note in the database
-     * @param dish_id The ID of the dish being deleted
+     * @param note_id The ID of the note being deleted
      */
-    public void deleteDish(long dish_id) {
+    public void deleteNote(long note_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NOTES, COLUMN_NOTE_ID + " = ?",
-                new String[] { String.valueOf(dish_id) });
+                new String[] { String.valueOf(note_id) });
     }
 
 
