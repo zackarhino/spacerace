@@ -7,10 +7,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-    <!-- spacerace Brand Colors -->
+    <!-- Text Colors -->
     <color name="black">#FF000000</color>
     <color name="text_grey">#474747</color>
+    <color name="text_placeholder">#656565</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- spacerace Brand Colors -->
     <color name="spacerace_purple">#84149C</color>
     <color name="spacerace_purple_dark">#53006D</color>
     <color name="spacerace_purple_light">#BB86FC</color>

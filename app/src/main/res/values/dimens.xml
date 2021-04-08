@@ -10,7 +10,7 @@
     <dimen name="recyclerview_bottom_padding">60dp</dimen>
 
     <!-- Sizing -->
-    <dimen name="imageview_height">200dp</dimen>
+    <dimen name="imageview_height">300dp</dimen>
 
     <!-- Font sizes -->
     <dimen name="title_text_size">24sp</dimen>

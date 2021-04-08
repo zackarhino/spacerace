@@ -4,10 +4,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.spacerace.MainActivity;
 import com.example.spacerace.R;
 
 /**
@@ -63,6 +65,17 @@ public class EditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit, container, false);
+        MainActivity.fab.show();
+        MainActivity.fab.setText(getResources().getString(R.string.fab_save));
+        MainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Edit", "Saving note");
+            }
+        });
+        return view;
     }
+
+
 }
