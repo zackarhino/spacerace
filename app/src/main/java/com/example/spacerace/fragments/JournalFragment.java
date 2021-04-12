@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +35,17 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class JournalFragment extends Fragment {
 
     private static ArrayList<Note> notes;
     public static NoteAdapter adapter;
-    SimpleDateFormat sdf;
+    SimpleDateFormat isoFormatter;
 
     public static FragmentManager fm;
 
@@ -62,7 +65,7 @@ public class JournalFragment extends Fragment {
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         swipeDetector = new SwipeDetector(getActivity());
         apod_imageview = view.findViewById(R.id.imageView);
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", getResources().getConfiguration().locale);
+        isoFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", getResources().getConfiguration().locale);
         fm = getActivity().getSupportFragmentManager();
         // Add a note when fab is clicked
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,21 +75,21 @@ public class JournalFragment extends Fragment {
             }
         });
 
-        notes = getAllNotes();
-        if(notes.isEmpty()){
-            NoteDB db = new NoteDB(getContext());
-            Note note = new Note("Hello, World!", "Lorem Ipsum", sdf.format(new Date()));
-            notes.add(note);
-            db.addNote(note);
-            adapter.notifyDataSetChanged();
-            db.closeDB();
-        }
-
         adapter = new NoteAdapter(getContext());
         RecyclerView recyclerView = view.findViewById(R.id.notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setOnTouchListener(new SwipeDetector(getActivity()));
+
+        notes = getAllNotes();
+        if(notes.isEmpty()){
+            NoteDB db = new NoteDB(getContext());
+            Note note = new Note("Hello, World!", "Lorem Ipsum", isoFormatter.format(new Date()));
+            notes.add(note);
+            db.addNote(note);
+            adapter.notifyDataSetChanged();
+            db.closeDB();
+        }
 
         updateNasaImage("i68uCMxS1T7fZjiMEbW3E0qEc0tMBxQaCxYZ08ZL");
 
@@ -131,8 +134,11 @@ public class JournalFragment extends Fragment {
 
     public static class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         Context context;
+        SimpleDateFormat dateFormatter;
+
         public NoteAdapter(Context context){
             this.context = context;
+            this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", context.getResources().getConfiguration().locale);
         }
 
         public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -144,7 +150,14 @@ public class JournalFragment extends Fragment {
         public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
             holder.title.setText(notes.get(position).getTitle());
             holder.body.setText(notes.get(position).getBody());
-            holder.date.setText(notes.get(position).getDate());
+            String date = notes.get(position).getDate();
+            try{
+                date = dateFormatter.parse(date).toString();
+            }catch (ParseException e){
+                Log.d("Date", "Error parsing date.");
+                e.printStackTrace();
+            }
+            holder.date.setText(date);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
