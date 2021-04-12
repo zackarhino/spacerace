@@ -4,16 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spacerace_purple_light"
+    android:background="@color/martian_orange"
     tools:context=".fragments.WeatherFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/sol_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Weather page"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/sol_text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sol_text_size"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/season_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/season_header"
+        android:textColor="@color/black"
+        android:textSize="@dimen/subheading_text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sol_textview" />
+
+    <TextView
+        android:id="@+id/season_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/small_padding"
+        android:text="@string/season_header"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/spacerace_purple"
+        app:layout_constraintTop_toBottomOf="@+id/season_header" />
+
+    <LinearLayout
+        android:id="@+id/n_s_season"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/season_textview">
+
+        <TextView
+            android:id="@+id/n_season_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/small_padding"
+            android:text="@string/north_season"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body_text_size" />
+
+        <TextView
+            android:id="@+id/s_season_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/small_padding"
+            android:text="@string/south_season"
+            android:textColor="@color/black"
+            android:textSize="@dimen/body_text_size" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/pressure_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:text="@string/pressure_header"
+        android:textColor="@color/black"
+        android:textSize="@dimen/subheading_text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/n_s_season" />
+
+    <TextView
+        android:id="@+id/avg_pressure_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/small_padding"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/spacerace_purple"
+        android:text="@string/avg_pressure"
+        app:layout_constraintTop_toBottomOf="@+id/pressure_header" />
+
+    <LinearLayout
+        android:id="@+id/mn_mx_pressure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/avg_pressure_textview">
+
+        <TextView
+            android:id="@+id/min_pressure_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/body_text_size"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/black"
+            android:text="@string/min_pressure" />
+
+        <TextView
+            android:id="@+id/max_pressure_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/body_text_size"
+            android:gravity="center"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/black"
+            android:text="@string/max_pressure" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
