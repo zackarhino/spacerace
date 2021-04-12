@@ -14,7 +14,7 @@ import com.example.spacerace.MainActivity;
 public class SwipeDetector implements View.OnTouchListener {
 
     private Activity activity;
-    static final int MIN_DISTANCE = 100;
+    static final int MIN_DISTANCE = 60;
     private float downX, downY, upX, upY;
 
     public SwipeDetector(final Activity activity) {
@@ -66,14 +66,14 @@ public class SwipeDetector implements View.OnTouchListener {
                     // left or right
                     if(deltaX < 0) { this.onLeftToRightSwipe(); return true; }
                     if(deltaX > 0) { this.onRightToLeftSwipe(); return true; }
-                } else { Log.d("ScrollView", "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE); }
+                }
 
                 // swipe vertical?
                 if(Math.abs(deltaY) > MIN_DISTANCE){
                     // top or down
                     if(deltaY < 0) { this.onTopToBottomSwipe(); return true; }
                     if(deltaY > 0) { this.onBottomToTopSwipe(); return true; }
-                } else { Log.d("ScrollView", "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE); }
+                }
 
                 //     return true;
             }
