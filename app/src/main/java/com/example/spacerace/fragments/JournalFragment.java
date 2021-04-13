@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.spacerace.MainActivity;
 import com.example.spacerace.R;
 import com.example.spacerace.api.VolleySingleton;
 import com.example.spacerace.database.Note;
@@ -38,16 +40,13 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class JournalFragment extends Fragment {
 
-    private static ArrayList<Note> notes;
+    public static ArrayList<Note> notes;
     public static NoteAdapter adapter;
-    SimpleDateFormat isoFormatter;
-
-    public static FragmentManager fm;
+    public static SimpleDateFormat isoFormatter;
 
     public SwipeDetector swipeDetector;
 
@@ -66,12 +65,13 @@ public class JournalFragment extends Fragment {
         swipeDetector = new SwipeDetector(getActivity());
         apod_imageview = view.findViewById(R.id.imageView);
         isoFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", getResources().getConfiguration().locale);
-        fm = getActivity().getSupportFragmentManager();
         // Add a note when fab is clicked
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                EditFragment editFragment = new EditFragment(true);
+                MainActivity.navView.setVisibility(View.GONE);
+                MainActivity.fm.beginTransaction().add(R.id.nav_host_fragment, editFragment, "edit").show(editFragment).commitAllowingStateLoss();
             }
         });
 
@@ -81,7 +81,7 @@ public class JournalFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setOnTouchListener(new SwipeDetector(getActivity()));
 
-        notes = getAllNotes();
+        notes = getAllNotes(getContext());
         if(notes.isEmpty()){
             NoteDB db = new NoteDB(getContext());
             Note note = new Note("Hello, World!", "Lorem Ipsum", isoFormatter.format(new Date()));
@@ -100,16 +100,15 @@ public class JournalFragment extends Fragment {
      * Get all Notes from the database and return them
      * @return The ArrayList of all Notes
      */
-    public ArrayList<Note> getAllNotes(){
+    public static ArrayList<Note> getAllNotes(Context context){
         ArrayList<Note> notes;
-        NoteDB db = new NoteDB(getContext());
+        NoteDB db = new NoteDB(context);
         notes = db.getAllNotes();
         db.closeDB();
         return notes;
     }
 
     /**
-     *
      * @param apiKey The API key to query the APOD API with
      */
     private void updateNasaImage(String apiKey){
@@ -124,10 +123,12 @@ public class JournalFragment extends Fragment {
                             //Log.d("Volley", imageURL);
                         }catch (Exception e){
                             Log.e("Volley", "Error parsing url.");
+                            // Placeholder image
+                            Picasso.get().load(R.drawable.spacerace_logo).into(apod_imageview);
                         }
                     }
                 }, new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) { }
+                    public void onErrorResponse(VolleyError error) { error.printStackTrace(); }
         });
         volley.getRequestQueue().add(jsonObjectRequest);
     }
@@ -144,7 +145,7 @@ public class JournalFragment extends Fragment {
         public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_view, parent, false);
 
-            return new NoteViewHolder(view);
+            return new NoteViewHolder(view, context);
         }
 
         public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
@@ -158,36 +159,37 @@ public class JournalFragment extends Fragment {
                 e.printStackTrace();
             }
             holder.date.setText(date);
+            holder.itemView.setOnTouchListener(new SwipeDetector((Activity) context));
+            // Open EditFragment
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("Click!", "Clicked on " + holder.title.getText());
-                    FragmentTransaction ft = fm.beginTransaction();
                     Bundle arguments = new Bundle();
-                    arguments.putInt("id", position);
+                    arguments.putInt("id", notes.get(position).getId());
                     arguments.putString("title", notes.get(position).getTitle());
                     arguments.putString("body", notes.get(position).getBody());
-                    EditFragment editFragment = new EditFragment();
+                    arguments.putString("date", notes.get(position).getDate());
+                    EditFragment editFragment = new EditFragment(false);
                     editFragment.setArguments(arguments);
-                    ft.replace(R.id.nav_host_fragment, editFragment, null).addToBackStack(null);
-                    ft.commit();
+                    MainActivity.navView.setVisibility(View.GONE);
+                    MainActivity.fm.beginTransaction().add(R.id.nav_host_fragment, editFragment, "edit").show(editFragment).commitAllowingStateLoss();
                 }
             });
-            holder.itemView.setOnTouchListener(new SwipeDetector((Activity) context));
             // Delete on long click
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     new AlertDialog.Builder(context)
                             .setTitle("Delete Message")
-                            .setMessage("Are you sure you want to delete " + holder.title + "?")
+                            .setMessage("Are you sure you want to delete " + holder.title.getText() + "?")
                             .setNegativeButton("No", null)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     NoteDB db = new NoteDB(context);
-                                    db.deleteNote(position);
-                                    JournalFragment.adapter.notifyDataSetChanged();
+                                    db.deleteNote(notes.get(position).getId());
+                                    notes.remove(position);
+                                    JournalFragment.adapter.notifyItemRemoved(position);
                                     db.closeDB();
                                 }
                             })
@@ -197,20 +199,21 @@ public class JournalFragment extends Fragment {
             });
         }
 
-        public int getItemCount() {
-            return notes.size();
-        }
+        public int getItemCount() { return notes.size(); }
     }
 
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView body;
         public TextView date;
-        public NoteViewHolder(@NonNull View itemView) {
+        Context context;
+
+        public NoteViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.title = (TextView)itemView.findViewById(R.id.title);
             this.body  = (TextView)itemView.findViewById(R.id.body);
             this.date  = (TextView)itemView.findViewById(R.id.date);
+            this.context = context;
         }
     }
 }
