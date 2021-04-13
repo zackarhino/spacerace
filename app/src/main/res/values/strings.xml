@@ -27,4 +27,16 @@
     <string name="avg_pressure">Avg. Pressure: %1$s Pa</string>
     <string name="min_pressure">Min: %1$s Pa</string>
     <string name="max_pressure">Max: %1$s Pa</string>
+    <string name="word_button_text">Big Bang!</string>
+    <string name="word_placeholder">Word</string>
+
+    <!-- Word Generator Fragment -->
+    <!-- The word list is located in Words.java -->
+    <string-array name="word_groups">
+        <item>Space Words</item>
+        <item>Nerdy Words</item>
+        <item>Fun Words</item>
+        <item>All Words</item>
+    </string-array>
+
 </resources>

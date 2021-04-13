@@ -83,7 +83,7 @@ public class Words {
             add("Pop");
     }};
 
-    public final ArrayList<String> getAllWords(){
+    public static final ArrayList<String> getAllWords(){
         ArrayList<String> ALL_WORDS = new ArrayList<>();
         ALL_WORDS.addAll(SPACE_WORDS);
         ALL_WORDS.addAll(NERDY_WORDS);
