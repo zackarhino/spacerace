@@ -13,7 +13,7 @@
     <dimen name="imageview_height">300dp</dimen>
 
     <!-- Font sizes -->
-    <dimen name="sol_text_size">60sp</dimen>
+    <dimen name="giant_text_size">60sp</dimen>
     <dimen name="subheading_text_size">40sp</dimen>
     <dimen name="title_text_size">24sp</dimen>
     <dimen name="body_text_size">16sp</dimen>
