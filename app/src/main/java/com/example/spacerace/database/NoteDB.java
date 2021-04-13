@@ -90,7 +90,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * Retrieve all Notes from database
      * @return ArrayList of all Notes
      */
-    public ArrayList<Note> getAllNotees() {
+    public ArrayList<Note> getAllNotes() {
         ArrayList<Note> notes = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_NOTES;
 
