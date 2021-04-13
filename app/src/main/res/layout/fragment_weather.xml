@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/large_padding"
         android:text="@string/sol_text"
         android:textColor="@color/black"
-        android:textSize="@dimen/sol_text_size"
+        android:textSize="@dimen/giant_text_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

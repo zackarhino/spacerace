@@ -10,6 +10,7 @@ import com.example.spacerace.MainActivity;
 
 /**
  * Modified from http://techin-android.blogspot.com/2011/11/swipe-event-in-android-scrollview.html
+ * This class adds a custom Gesture recognizer so that you can swipe through the NestedScrollView/RecyclerView
  */
 public class SwipeDetector implements View.OnTouchListener {
 
