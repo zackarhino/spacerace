@@ -1,7 +1,10 @@
 package com.example.spacerace;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.spacerace.fragments.EditFragment;
 import com.example.spacerace.fragments.JournalFragment;
 import com.example.spacerace.fragments.SettingsFragment;
 import com.example.spacerace.fragments.WeatherFragment;
@@ -10,6 +13,7 @@ import com.example.spacerace.helper.SwipeDetector;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -32,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static NavController navController;
     public static BottomNavigationView navView;
-
     public static int bottomNavPosition = 0;
+
+    public static FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Only allow night mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
         setContentView(R.layout.activity_main);
+
+        fm = getSupportFragmentManager();
+
         navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_journal, R.id.navigation_weather, R.id.navigation_word, R.id.navigation_settings)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        // Uncomment to add an action bar
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         // Viewpager to help navigate the bottom nav
@@ -62,10 +70,11 @@ public class MainActivity extends AppCompatActivity {
             }
             public void onPageScrollStateChanged(int state) { }
         });
+
         // Set adapter, etc.
         setupViewPager(viewPager);
-
         NavigationUI.setupWithNavController(navView, navController);
+
         // Syncs the ViewPager with the bottom nav
         navView.setOnNavigationItemSelectedListener(
                 item -> {
@@ -85,6 +94,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If an EditFragment is visible
+        if(findViewById(R.id.edit) != null)
+            Log.d("Edit", "Pressed back in EditFragment");
+        else
+            super.onBackPressed();
     }
 
     /**
