@@ -21,6 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Displays atmospheric data for the current Sol on Mars
+ * Information is pulled from NASA's InSight API
+ * @author Zachary Allard
+ */
 public class WeatherFragment extends Fragment {
 
     TextView sol_textview;
@@ -56,6 +61,7 @@ public class WeatherFragment extends Fragment {
     /**
      * Update the weather info
      * @param apiKey The API key to query the APOD API with
+     * @author Zachary Allard
      */
     private void updateMarsWeather(String apiKey){
         VolleySingleton volley = VolleySingleton.getInstance(getContext());

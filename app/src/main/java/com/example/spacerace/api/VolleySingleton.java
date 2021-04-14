@@ -5,6 +5,10 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * Volley class for querying APIs
+ * @author Zachary Allard
+ */
 public class VolleySingleton {
     private static VolleySingleton instance = null;
     private RequestQueue requestQueue;

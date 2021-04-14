@@ -34,6 +34,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
 
+    <!-- I used a NestedScrollView because it has a method called
+         allowNestedScrolling(false) which disables the RecyclerView scroll-->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scrollview"
         android:layout_width="match_parent"

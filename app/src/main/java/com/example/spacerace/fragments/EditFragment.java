@@ -23,6 +23,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Edit Fragment for creating and updating Notes
+ * @author Zachary Allard
+ */
 public class EditFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +41,7 @@ public class EditFragment extends Fragment {
     private String body;
     private String date;
 
+    // Determines whether to add a new note or update
     private boolean isNewNote;
 
     public EditText titleEditText;
@@ -80,8 +85,6 @@ public class EditFragment extends Fragment {
 
         titleEditText = view.findViewById(R.id.title);
         bodyEditText = view.findViewById(R.id.body);
-        titleEditText.setFocusable(true);
-        bodyEditText.setFocusable(true);
 
         titleEditText.setText(this.title);
         bodyEditText.setText(this.body);
@@ -89,16 +92,10 @@ public class EditFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d("View", "Detached EditFragment");
-        save(false);
-    }
-
     /**
      * Save a note using the details in the view
      * @param close Whether to navigate away
+     * @author Zachary Allard
      */
     private void save(boolean close){
         NoteDB db = new NoteDB(getContext());
@@ -114,14 +111,10 @@ public class EditFragment extends Fragment {
 
     /**
      * Navigates away from the EditFragment and returns to Journal
-     * This is a bit hacky but it's otherwise a logistical nightmare
+     * @author Zachary Allard
      */
     private void close(){
-        titleEditText.setFocusable(false);
-        bodyEditText.setFocusable(false);
-
         MainActivity.navView.setVisibility(View.VISIBLE);
-
         MainActivity.setBottomNavPosition(0, true);
     }
 }

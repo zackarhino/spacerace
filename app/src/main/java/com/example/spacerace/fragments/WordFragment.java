@@ -18,6 +18,11 @@ import com.example.spacerace.Words;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Generates random words based on a category
+ * The words are located in Words.java
+ * @author Zachary Allard
+ */
 public class WordFragment extends Fragment {
 
     enum Categories {
@@ -33,7 +38,6 @@ public class WordFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initial Word
     }
 
     @Override
@@ -44,10 +48,10 @@ public class WordFragment extends Fragment {
         word_groups = view.findViewById(R.id.word_groups);
         big_bang_button = view.findViewById(R.id.button);
 
-        // Setup spinner
+        // Set up spinner
         word_groups.setAdapter(ArrayAdapter.createFromResource(getContext(), R.array.word_groups, R.layout.support_simple_spinner_dropdown_item));
 
-        // Setup Button
+        // Set up Button
         big_bang_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +82,7 @@ public class WordFragment extends Fragment {
     /**
      * Pick a word from all available words in Word and return it
      * @return The random word
+     * @author Zachary Allard
      */
     public String getRandomWord(Categories category){
         ArrayList<String> wordList;

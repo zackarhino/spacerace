@@ -42,6 +42,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Holds all the user's Notes and displays the Astronomy Pic of the Day from NASA's API
+ * @author Zachary Allard
+ */
 public class JournalFragment extends Fragment {
 
     public static ArrayList<Note> notes;
@@ -80,9 +84,11 @@ public class JournalFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.notes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        // Listen for the ViewPager swipes that are eaten by the NestedScrollView
         recyclerView.setOnTouchListener(new SwipeDetector(getActivity()));
 
         notes = getAllNotes(getContext());
+        // Add a placeholder note if empty
         if(notes.isEmpty()){
             NoteDB db = new NoteDB(getContext());
             Note note = new Note("Hello, World!", "Lorem Ipsum", isoFormatter.format(new Date()));
@@ -100,6 +106,7 @@ public class JournalFragment extends Fragment {
     /**
      * Get all Notes from the database and return them
      * @return The ArrayList of all Notes
+     * @author Zachary Allard
      */
     public static ArrayList<Note> getAllNotes(Context context){
         ArrayList<Note> notes;
@@ -110,7 +117,9 @@ public class JournalFragment extends Fragment {
     }
 
     /**
+     * Pulls the daily image from the API
      * @param apiKey The API key to query the APOD API with
+     * @author Zachary Allard
      */
     private void updateNasaImage(String apiKey){
         VolleySingleton volley = VolleySingleton.getInstance(getContext());
@@ -134,6 +143,10 @@ public class JournalFragment extends Fragment {
         volley.getRequestQueue().add(jsonObjectRequest);
     }
 
+    /**
+     * Note Adapter
+     * @author Zachary Allard
+     */
     public static class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         Context context;
         SimpleDateFormat dateFormatter;
@@ -201,6 +214,10 @@ public class JournalFragment extends Fragment {
         public int getItemCount() { return notes.size(); }
     }
 
+    /**
+     * Note View Holder
+     * @author Zachary Allard
+     */
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public TextView body;

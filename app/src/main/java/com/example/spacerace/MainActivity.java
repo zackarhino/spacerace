@@ -30,6 +30,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main Activity
+ * @author Zachary Allard
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static ViewPager viewPager;
@@ -49,18 +53,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fm = getSupportFragmentManager();
-
         navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_journal, R.id.navigation_weather, R.id.navigation_word, R.id.navigation_settings)
-                .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        // Uncomment to add an action bar
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        // Viewpager to help navigate the bottom nav
+        // ViewPager to help navigate the bottom nav
         viewPager = findViewById(R.id.fragmentPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
@@ -95,7 +91,11 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 });
     }
-
+    
+    /**
+     * Disables the back button on EditFragment to prevent accidental data loss
+     * @author Zachary Allard
+     */
     @Override
     public void onBackPressed() {
         // If an EditFragment is visible
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
      * Sets the value of position and updates the components
      * @param index Bottom Nav Position (0-indexed)
      * @param navigate Whether to navigate to the fragment at index
+     * @author Zachary Allard
      */
     public static void setBottomNavPosition(int index, boolean navigate){
         bottomNavPosition = index;
@@ -118,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(navView.getMenu().getItem(index).getItemId());
         }
     }
-    // NOTE: The viewpager code was modified from https://github.com/coderminion/Android-Bottom-navigation-with-Viewpager-Fragments
     /**
+     * NOTE: The viewpager code was modified from https://github.com/coderminion/Android-Bottom-navigation-with-Viewpager-Fragments
      * Initializes the ViewPager adapter and fragments
      * @param viewPager The ViewPager to configure
      */

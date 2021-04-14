@@ -36,6 +36,7 @@ public class NoteDB extends SQLiteOpenHelper {
     /**
      * Intialize the database by creating tables
      * @param db The database to operate on
+     * @author Zachary Allard
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -47,6 +48,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * @param db Database to reset
      * @param oldVersion Old version number
      * @param newVersion New version number
+     * @author Zachary Allard
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -59,6 +61,7 @@ public class NoteDB extends SQLiteOpenHelper {
     /**
      * Create Note in database
      * @param note Note to create
+     * @author Zachary Allard
      */
     public void addNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -73,6 +76,7 @@ public class NoteDB extends SQLiteOpenHelper {
     /**
      * Retrieve single Note from database
      * @param id ID of Note in database
+     * @author Zachary Allard
      */
     public Note getNote(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -89,6 +93,7 @@ public class NoteDB extends SQLiteOpenHelper {
     /**
      * Retrieve all Notes from database
      * @return ArrayList of all Notes
+     * @author Zachary Allard
      */
     public ArrayList<Note> getAllNotes() {
         ArrayList<Note> notes = new ArrayList<>();
@@ -113,6 +118,7 @@ public class NoteDB extends SQLiteOpenHelper {
      * Update a Note in the database
      * @param note The Note to modify
      * @return The status of the update
+     * @author Zachary Allard
      */
     public int updateNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -126,6 +132,7 @@ public class NoteDB extends SQLiteOpenHelper {
     /**
      * Delete a Note in the database
      * @param note_id The ID of the note being deleted
+     * @author Zachary Allard
      */
     public void deleteNote(long note_id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -136,6 +143,7 @@ public class NoteDB extends SQLiteOpenHelper {
 
     /**
      * Use in external classes to close connection
+     * @author Zachary Allard
      */
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">spacerace</string>
+    <string name="credits">Space images from NASA. All other assets created by Zachary Allard.</string>
 
     <!-- Navigation labels -->
     <string name="title_journal">Journal</string>
@@ -13,6 +14,8 @@
 
     <!-- Content Description -->
     <string name="cd_apod">NASA Astronmy Picture of the Day</string>
+    <string name="menu">cd_menu</string>
+    <string name="spacerace_banner">cd_banner</string>
 
     <!-- Note Placeholder -->
     <string name="note_title">Title</string>
@@ -29,13 +32,12 @@
     <string name="max_pressure">Max: %1$s Pa</string>
     <string name="word_button_text">Big Bang!</string>
     <string name="word_placeholder">Word</string>
-    <string name="credits">Space images from NASA. All other assets created by Zachary Allard.</string>
+
+    <!-- Social Media -->
     <string name="twitter">Twitter</string>
     <string name="instagram">Instagram</string>
     <string name="facebook">Facebook</string>
     <string name="youtube">YouTube</string>
-    <string name="menu">cd_menu</string>
-    <string name="spacerace_banner">cd_banner</string>
 
     <!-- Word Generator Fragment -->
     <!-- The word list is located in Words.java -->

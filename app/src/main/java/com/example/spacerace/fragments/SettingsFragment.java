@@ -14,6 +14,10 @@ import android.widget.Button;
 import com.example.spacerace.MainActivity;
 import com.example.spacerace.R;
 
+/**
+ * Various settings, credits, etc.
+ * @author Zachary Allard
+ */
 public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
