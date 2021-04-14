@@ -27,6 +27,7 @@
         android:backgroundTint="@color/spacerace_purple"
         android:gravity="center"
         android:text="@string/fab_new_note"
+        android:layout_marginBottom="?android:attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.98"

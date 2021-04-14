@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 });
     }
-    
+
     /**
      * Disables the back button on EditFragment to prevent accidental data loss
      * @author Zachary Allard
