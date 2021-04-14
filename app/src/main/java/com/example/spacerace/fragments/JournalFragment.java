@@ -69,9 +69,10 @@ public class JournalFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditFragment editFragment = new EditFragment(true);
                 MainActivity.navView.setVisibility(View.GONE);
-                MainActivity.fm.beginTransaction().add(R.id.nav_host_fragment, editFragment, "edit").show(editFragment).commitAllowingStateLoss();
+                Bundle arguments = new Bundle();
+                arguments.putBoolean("newNote", true);
+                MainActivity.navController.navigate(R.id.navigation_edit, arguments);
             }
         });
 
@@ -165,14 +166,12 @@ public class JournalFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Bundle arguments = new Bundle();
+                    arguments.putBoolean("newNote", false);
                     arguments.putInt("id", notes.get(position).getId());
                     arguments.putString("title", notes.get(position).getTitle());
                     arguments.putString("body", notes.get(position).getBody());
-                    arguments.putString("date", notes.get(position).getDate());
-                    EditFragment editFragment = new EditFragment(false);
-                    editFragment.setArguments(arguments);
                     MainActivity.navView.setVisibility(View.GONE);
-                    MainActivity.fm.beginTransaction().add(R.id.nav_host_fragment, editFragment, "edit").show(editFragment).commitAllowingStateLoss();
+                    MainActivity.navController.navigate(R.id.action_navigation_journal_to_editFragment, arguments);
                 }
             });
             // Delete on long click

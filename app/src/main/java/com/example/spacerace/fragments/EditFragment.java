@@ -23,15 +23,11 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_ID = "id";
+    private static final String ARG_NEW_NOTE = "newNote";
     private static final String ARG_TITLE = "title";
     private static final String ARG_BODY = "body";
     private static final String ARG_DATE = "date";
@@ -48,28 +44,8 @@ public class EditFragment extends Fragment {
 
     public ExtendedFloatingActionButton fab;
 
-    public EditFragment(boolean newNote) {
-        this.isNewNote = newNote;
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param title The title of the note
-     * @param body The note's text
-     * @param date The date the note was updated
-     * @return A new instance of fragment EditFragment.
-     */
-    public static EditFragment newInstance(int id, String title, String body, String date) {
-        EditFragment fragment = new EditFragment(false);
-        Bundle args = new Bundle();
-        args.putInt(ARG_ID, id);
-        args.putString(ARG_TITLE, title);
-        args.putString(ARG_BODY, body);
-        args.putString(ARG_DATE, date);
-        fragment.setArguments(args);
-        return fragment;
+    public EditFragment() {
+        // Required Empty Constructor
     }
 
     @Override
@@ -77,6 +53,7 @@ public class EditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             id = getArguments().getInt(ARG_ID);
+            isNewNote = getArguments().getBoolean(ARG_NEW_NOTE);
             title = getArguments().getString(ARG_TITLE);
             body = getArguments().getString(ARG_BODY);
             date = getArguments().getString(ARG_DATE);
@@ -145,7 +122,6 @@ public class EditFragment extends Fragment {
 
         MainActivity.navView.setVisibility(View.VISIBLE);
 
-        MainActivity.fm.popBackStack();
         MainActivity.setBottomNavPosition(0, true);
     }
 }
