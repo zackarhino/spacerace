@@ -1,8 +1,12 @@
 package com.example.spacerace;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.spacerace.fragments.EditFragment;
 import com.example.spacerace.fragments.JournalFragment;
@@ -13,6 +17,7 @@ import com.example.spacerace.helper.SwipeDetector;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 });
+        invalidateOptionsMenu();
     }
 
     /**

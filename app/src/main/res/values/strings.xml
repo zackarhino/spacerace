@@ -39,6 +39,18 @@
     <string name="facebook">Facebook</string>
     <string name="youtube">YouTube</string>
 
+    <!-- Setting Fragment -->
+    <!-- Setting keys -->
+    <string name="setting_key_border">border</string>
+    <string name="setting_key_scale_type">scale_type</string>
+    <string name="setting_key_resolution">resolution</string>
+    <string name="setting_key_date_format">date_format</string>
+    <!-- Settings menu text -->
+    <string name="setting_border">Toggle Note Border</string>
+    <string name="setting_scale_type">Switch Scale Type</string>
+    <string name="setting_resolution">Change Image Resolution</string>
+    <string name="setting_date_format">Swap Date Format</string>
+
     <!-- Word Generator Fragment -->
     <!-- The word list is located in Words.java -->
     <string-array name="word_groups">

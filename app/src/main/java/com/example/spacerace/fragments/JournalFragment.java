@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -32,15 +33,18 @@ import com.example.spacerace.api.VolleySingleton;
 import com.example.spacerace.database.Note;
 import com.example.spacerace.database.NoteDB;
 import com.example.spacerace.helper.SwipeDetector;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Holds all the user's Notes and displays the Astronomy Pic of the Day from NASA's API
@@ -65,6 +69,7 @@ public class JournalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_journal, container, false);
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         swipeDetector = new SwipeDetector(getActivity());
         apod_imageview = view.findViewById(R.id.imageView);
@@ -97,7 +102,11 @@ public class JournalFragment extends Fragment {
             adapter.notifyDataSetChanged();
             db.closeDB();
         }
-
+        // Set scale type before displaying
+        if(sharedPreferences.getBoolean(getString(R.string.setting_key_scale_type), false))
+            apod_imageview.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        else
+            apod_imageview.setScaleType(ImageView.ScaleType.CENTER_CROP);
         updateNasaImage("i68uCMxS1T7fZjiMEbW3E0qEc0tMBxQaCxYZ08ZL");
 
         return view;
@@ -123,12 +132,18 @@ public class JournalFragment extends Fragment {
      */
     private void updateNasaImage(String apiKey){
         VolleySingleton volley = VolleySingleton.getInstance(getContext());
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         String url = "https://api.nasa.gov/planetary/apod?api_key=" + apiKey;
+        String resolution;
+        // Choose resolution based on preferences
+        if(sharedPreferences.getBoolean(getString(R.string.setting_key_resolution), false))
+            resolution = "hdurl";
+        else resolution = "url";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     public void onResponse(JSONObject response) {
                         String imageURL = "";
                         try {
-                            imageURL = response.getString("url");
+                            imageURL = response.getString(resolution);
                             Picasso.get().load(imageURL).into(apod_imageview);
                             //Log.d("Volley", imageURL);
                         }catch (Exception e){
@@ -149,20 +164,29 @@ public class JournalFragment extends Fragment {
      */
     public static class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder>{
         Context context;
+        Activity activity;
         SimpleDateFormat dateFormatter;
+        SharedPreferences sharedPreferences;
 
         public NoteAdapter(Context context){
             this.context = context;
+            this.activity = (Activity) context;
             this.dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", context.getResources().getConfiguration().locale);
         }
 
         public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_view, parent, false);
-
+            sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
             return new NoteViewHolder(view, context);
         }
 
         public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
+            // Set border based on preferences
+            MaterialCardView cv = holder.itemView.findViewById(R.id.card);
+            if(sharedPreferences.getBoolean(activity.getString(R.string.setting_key_border), false))
+                cv.setStrokeWidth((int)activity.getResources().getDimension(R.dimen.note_border_width));
+            else cv.setStrokeWidth(0);
+
             holder.title.setText(notes.get(position).getTitle());
             holder.body.setText(notes.get(position).getBody());
             String date = notes.get(position).getDate();
@@ -172,6 +196,9 @@ public class JournalFragment extends Fragment {
                 Log.d("Date", "Error parsing date.");
                 e.printStackTrace();
             }
+            // Check date format from preferences
+            if(sharedPreferences.getBoolean(activity.getString(R.string.setting_key_date_format), false))
+                date = "Stardate: " + (new Random().nextInt(9001)+1) + "." + (new Random().nextInt(99)+1);
             holder.date.setText(date);
             holder.itemView.setOnTouchListener(new SwipeDetector((Activity) context));
             // Open EditFragment

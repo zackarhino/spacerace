@@ -9,9 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.spacerace.R;
 import com.example.spacerace.api.VolleySingleton;
@@ -19,6 +21,8 @@ import com.example.spacerace.api.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -66,6 +70,7 @@ public class WeatherFragment extends Fragment {
     private void updateMarsWeather(String apiKey){
         VolleySingleton volley = VolleySingleton.getInstance(getContext());
         String url = "https://api.nasa.gov/insight_weather/?api_key=" + apiKey + "&feedtype=json&ver=1.0";
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             public void onResponse(JSONObject response) {
                 try {
