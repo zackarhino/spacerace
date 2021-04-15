@@ -114,7 +114,7 @@ public class EditFragment extends Fragment {
      * @author Zachary Allard
      */
     private void close(){
-        MainActivity.navView.setVisibility(View.VISIBLE);
         MainActivity.setBottomNavPosition(0, true);
+        MainActivity.navView.setVisibility(View.VISIBLE);
     }
 }
