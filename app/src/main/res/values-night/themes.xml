@@ -14,5 +14,11 @@
         <!-- Customize your theme here. -->
         <item name="colorControlActivated">@color/spacerace_purple</item>
         <item name="android:textColorHighlight">@color/spacerace_purple_light</item>
+        <item name="popupMenuStyle">@style/popup_theme</item>
+    </style>
+    <!-- Margin for popup menu items -->
+    <style name="popup_theme" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:dropDownHorizontalOffset">-32dp</item>
+        <item name="android:dropDownVerticalOffset">2dp</item>
     </style>
 </resources>

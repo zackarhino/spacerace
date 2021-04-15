@@ -1,5 +1,9 @@
 package com.example.spacerace.database;
 
+/**
+ * Simple Note that holds a title, body, and metadata (id, date)
+ * @author Zachary Allard
+ */
 public class Note {
     int id;
     String title;

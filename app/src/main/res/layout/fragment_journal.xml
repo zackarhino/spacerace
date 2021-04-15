@@ -27,6 +27,7 @@
         android:backgroundTint="@color/spacerace_purple"
         android:gravity="center"
         android:text="@string/fab_new_note"
+        android:layout_marginBottom="?android:attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.98"
@@ -34,6 +35,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.98" />
 
+    <!-- I used a NestedScrollView because it has a method called
+         allowNestedScrolling(false) which disables the RecyclerView scroll-->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scrollview"
         android:layout_width="match_parent"

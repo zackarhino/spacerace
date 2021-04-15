@@ -3,9 +3,10 @@ package com.example.spacerace;
 import java.util.ArrayList;
 
 /**
- * This class holds all the Word Generator words. I was initially going to create a string resource file,
- * but it is limited in the sense that it's difficult to get a random ID from the resources
- * @version 1
+ * This class holds all the Word Generator words.
+ * I was initially going to create a string resource file, but it is limited in the sense that
+ * it's difficult to get a random ID from the resources
+ * @version 1.0.0
  * @author Zachary Allard
  */
 public class Words {
@@ -83,6 +84,7 @@ public class Words {
             add("Pop");
     }};
 
+    // Adds all the words from the other lists so that it's always up to date
     public static final ArrayList<String> getAllWords(){
         ArrayList<String> ALL_WORDS = new ArrayList<>();
         ALL_WORDS.addAll(SPACE_WORDS);

@@ -4,11 +4,15 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_padding"
-        android:elevation="4dp"
+        android:elevation="6dp"
+        app:cardCornerRadius="0dp"
+        app:strokeColor="@color/spacerace_purple"
+        app:strokeWidth="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,5 +58,5 @@
                 android:text="06-17-99"
                 android:textColor="@color/spacerace_purple" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
